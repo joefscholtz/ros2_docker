@@ -53,4 +53,5 @@ RUN curl -sS https://starship.rs/install.sh -o /home/${USERNAME}/starship_instal
 RUN /home/${USERNAME}/starship_install.sh -y
 
 USER ros
+WORKDIR /home/${USERNAME}
 CMD ["zsh"]
