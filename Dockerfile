@@ -1,12 +1,12 @@
 FROM osrf/ros:humble-desktop-full AS base
 
-#TODO: put dev dependencies in dev image
+#TODO: Use base as default stage
 RUN apt-get update \
     && apt-get install -y \
-    zsh \
     vim \
-    weston \
-    qtwayland5 \
+    nano \
+    curl \
+    python3-argcomplete \
     && rm -rf /var/lib/apt/lists/*
 
 RUN rosdep init || echo "rosdep already initialized"
@@ -26,17 +26,31 @@ RUN groupadd --gid $USER_GID $USERNAME \
   && chmod 0440 /etc/sudoers.d/$USERNAME \
   && rm -rf /var/lib/apt/lists/*
 
-# Get gazebo
-RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
-  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null \
-  && apt-get update && apt-get install -q -y --no-install-recommends \
-    ros-humble-ros-gz \
-  && rm -rf /var/lib/apt/lists/*
+RUN usermod -aG dialout ${USERNAME}
+
+COPY .bashrc /home/${USERNAME}/.bashrc
 
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 CMD ["bash"]
+
 FROM base as dev
+
+RUN apt-get update \
+    && apt-get install -y \
+    zsh \
+    && rm -rf /var/lib/apt/lists/*
+
+
+COPY .zshrc /home/${USERNAME}/.zshrc
+COPY .config /home/${USERNAME}/.config
+
+
+RUN curl -sS https://starship.rs/install.sh -o /home/${USERNAME}/starship_install.sh \
+    && chmod +x /home/${USERNAME}/starship_install.sh
+RUN /home/${USERNAME}/starship_install.sh -y
+
+USER ros
 CMD ["zsh"]
