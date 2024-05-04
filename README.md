@@ -15,13 +15,13 @@ git clone --recursive git@github.com:joefscholtz/ros2_docker.git
 Build base stage to deploy
 
 ```bash
-docker build -t <image_name> . -t base
+docker build -t <image_name> <path_to_ros2_docker> -t base
 ```
 
 Build develop stage with my personal workflow
 
 ```bash
-docker build -t <image_name> . -t dev
+docker build -t <image_name> <path_to_ros2_docker> -t dev
 ```
 
 ## Run
@@ -36,5 +36,6 @@ Use the run script in order to use GUI applications with:
 
 - [ ] Use Docker compose instead of shell script
 - [ ] Use base stage as default, without the need to add the --target flag when building
-- [ ] Get Gazebo working
+- [ ] Fix starship not showing username (why?? grrr)
+- [x] Get Gazebo working (😎)
 - [ ] Connect to lsp servers inside docker using Neovim

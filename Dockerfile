@@ -6,6 +6,7 @@ RUN apt-get update \
     wget \
     vim \
     nano \
+    htop \
     curl \
     python3-argcomplete \
     && rm -rf /var/lib/apt/lists/*
@@ -50,6 +51,7 @@ RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pk
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null \
   && apt-get update && apt-get install -q -y --no-install-recommends \
     ros-humble-ros-gz \
+    ros-humble-gazebo-ros \
   && rm -rf /var/lib/apt/lists/*
 ENV DEBIAN_FRONTEND=
 
