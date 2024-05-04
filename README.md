@@ -20,6 +20,7 @@ docker build -t <image_name> . -t dev
 
 ## TODO
 
-[ ] Use base stage as default, without the need to add the --target flag when building
-[ ] Get Gazebo working
-[ ] Connect to lsp servers inside docker using Neovim
+- [ ] Use Docker compose instead of shell script
+- [ ] Use base stage as default, without the need to add the --target flag when building
+- [ ] Get Gazebo working
+- [ ] Connect to lsp servers inside docker using Neovim
