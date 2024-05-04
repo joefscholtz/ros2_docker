@@ -2,3 +2,5 @@ devel/
 logs/
 build/
 bin/
+log/
+install/
