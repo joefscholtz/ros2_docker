@@ -3,6 +3,7 @@ FROM osrf/ros:humble-desktop-full AS base
 #TODO: Use base as default stage
 RUN apt-get update \
     && apt-get install -y \
+    wget \
     vim \
     nano \
     curl \
@@ -30,6 +31,29 @@ RUN usermod -aG dialout ${USERNAME}
 
 COPY .bashrc /home/${USERNAME}/.bashrc
 
+SHELL ["/bin/bash", "-c"]
+
+RUN source /home/${USERNAME}/.bashrc
+
+# Extend ROS
+
+RUN rm -rf /etc/ros/rosdep/sources.list.d/* \
+    && rosdep init
+
+SHELL ["/bin/sh", "-c"]
+
+# Gazebo
+
+ENV DEBIAN_FRONTEND=noninteractive
+# Install gazebo
+RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null \
+  && apt-get update && apt-get install -q -y --no-install-recommends \
+    ros-humble-ros-gz \
+  && rm -rf /var/lib/apt/lists/*
+ENV DEBIAN_FRONTEND=
+
+# Entrypoint
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
@@ -43,14 +67,12 @@ RUN apt-get update \
     zsh \
     && rm -rf /var/lib/apt/lists/*
 
-
-COPY .zshrc /home/${USERNAME}/.zshrc
-COPY .config /home/${USERNAME}/.config
-
-
 RUN curl -sS https://starship.rs/install.sh -o /home/${USERNAME}/starship_install.sh \
     && chmod +x /home/${USERNAME}/starship_install.sh
 RUN /home/${USERNAME}/starship_install.sh -y
+
+COPY .zshrc /home/${USERNAME}/.zshrc
+COPY .config /home/${USERNAME}/.config
 
 USER ros
 WORKDIR /home/${USERNAME}
