@@ -3,4 +3,5 @@ eval "$(starship init bash)"
 
 #source ros
 . /opt/ros/humble/setup.bash
-#. /usr/share/colcon_argcomplete/hook/colcon_argcomplete.zsh
+#eval "$(register-python-argcomplete3 colcon)"
+. /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash

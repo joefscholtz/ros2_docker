@@ -14,5 +14,7 @@ eval "$(starship init zsh)"
 
 #source ros
 . /opt/ros/humble/setup.zsh
-#. /usr/share/colcon_argcomplete/hook/colcon_argcomplete.zsh
-
+# argcomplete for ros2 & colcon
+eval "$(register-python-argcomplete3 ros2)"
+eval "$(register-python-argcomplete3 colcon)"
+#. /usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
