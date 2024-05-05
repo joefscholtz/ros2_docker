@@ -42,9 +42,12 @@ Use the run script in order to use GUI applications with:
 
 It is possible to add ROS 2 packages or meta-packages inside `ros2_ws/src`, extend the `ros2_docker:<tag>` by copying the files inside the `ros2_ws/src/ros2_package` folder in you package folder `ros2_ws/src/<package name>` and adding the package dependencies in the `ros2_package.Dockerfile` file, and then running with the `x11run.sh` file.
 
+Don't forget to run the proper `ros2 pkg create` to create a package inside `ros2_ws/src`. The `ros2_docker` images can be used for it.
+
 ## TODO
 
-- [ ] Use Docker compose instead of shell script;
+- [ ] Use Docker compose instead of shell script?;
+- [ ] Rethink the strategy that is being used to add ROS 2 packages;
 - [ ] Use base stage as default, without the need to add the --target flag when building;
 - [ ] Fix starship not showing username (why?? grrr);
 - [x] Get Gazebo working (😎);
