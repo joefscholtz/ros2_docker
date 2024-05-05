@@ -1,4 +1,4 @@
-FROM osrf/ros:humble-desktop-full AS base
+FROM osrf/ros:humble-desktop-full AS ros2_docker_base
 
 #TODO: Use base as default stage
 RUN apt-get update \
@@ -62,7 +62,7 @@ ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 CMD ["bash"]
 
-FROM base as dev
+FROM ros2_docker_base as ros2_docker_dev
 
 RUN apt-get update \
     && apt-get install -y \
