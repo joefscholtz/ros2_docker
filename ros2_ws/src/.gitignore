@@ -1,2 +1,4 @@
 *
+!ros2_package
+!ros2_package/*
 !.gitignore

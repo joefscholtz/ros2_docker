@@ -38,6 +38,10 @@ Use the run script in order to use GUI applications with:
 <path_to_ros2_docker>/x11run.sh
 ```
 
+## Usage
+
+It is possible to add ROS 2 packages or meta-packages inside `ros2_ws/src`, extend the `ros2_docker:<tag>` by copying the files inside the `ros2_ws/src/ros2_package` folder in you package folder `ros2_ws/src/<package name>` and adding the package dependencies in the `ros2_package.Dockerfile` file, and then running with the `x11run.sh` file.
+
 ## TODO
 
 - [ ] Use Docker compose instead of shell script;
