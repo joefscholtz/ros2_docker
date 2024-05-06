@@ -31,6 +31,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 RUN usermod -aG dialout ${USERNAME}
 
 COPY .bashrc /home/${USERNAME}/.bashrc
+RUN chmod +w /home/${USERNAME}/.bashrc
 
 SHELL ["/bin/bash", "-c"]
 
@@ -73,9 +74,12 @@ RUN curl -sS https://starship.rs/install.sh -o /home/${USERNAME}/starship_instal
     && chmod +x /home/${USERNAME}/starship_install.sh
 RUN /home/${USERNAME}/starship_install.sh -y
 
+USER ros
+
 COPY .zshrc /home/${USERNAME}/.zshrc
 COPY .config /home/${USERNAME}/.config
 
-USER ros
+RUN sudo chown ros /home/${USERNAME}/.zshrc
+
 WORKDIR /home/${USERNAME}
 CMD ["zsh"]
