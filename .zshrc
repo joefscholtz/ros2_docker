@@ -17,6 +17,7 @@ eval "$(starship init zsh)"
 # argcomplete for ros2 & colcon
 eval "$(register-python-argcomplete3 ros2)"
 eval "$(register-python-argcomplete3 colcon)"
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/usr/share/gazebo-11/models
 #. /usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
 
 #aliases
