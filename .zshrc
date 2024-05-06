@@ -18,3 +18,7 @@ eval "$(starship init zsh)"
 eval "$(register-python-argcomplete3 ros2)"
 eval "$(register-python-argcomplete3 colcon)"
 #. /usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
+
+#aliases
+alias l="ls -a"
+alias ll="ls -al"
