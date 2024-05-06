@@ -4,25 +4,26 @@ My workflow to run ros2 applications inside Docker, including base stage to depl
 
 ## Preview
 
-Turtlebot3 Gazebo preview, `ros-$ROS_DISTRO-turtlebot3` and `ros-$ROS_DISTRO-turtlebot3-simulations` had to be installed and then with
+Preview of the [Docker](https://www.docker.com/) image provided by this package simulating the [Turtlebot3 waffle](https://github.com/ROBOTIS-GIT/turtlebot3) with [Gazebo](https://gazebosim.org). Inside the container, the following instructions were executed
 
 ```bash
+sudo apt install ros-humble-turtlebot3 ros-humble-turtlebot3-simulations
 export TURTLEBOT3_MODEL=waffle
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/usr/share/gazebo-11/models:/opt/ros/$ROS_DISTRO/share/turtlebot3_gazebo/models
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/$ROS_DISTRO/share/turtlebot3_gazebo/models
 . ~/.zshrc # or .bashrc if the ros2_docker:base image is being used
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch
 ```
 
-This is the result
+and this is the result:
 
 ![Turtlebot3 Gazebo preview](assets/tb3_gazebo_preview.png)
 
 ## Install
 
-In order to order to make use of the development workflow, it is needed to clone the submodules alongside the repo with:
+Clone the repository
 
 ```bash
-git clone --recursive git@github.com:joefscholtz/ros2_docker.git
+git clone git@github.com:joefscholtz/ros2_docker.git
 ```
 
 ## Build
