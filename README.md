@@ -62,6 +62,7 @@ Don't forget to run the proper `ros2 pkg create` to create a package inside `ros
 
 ## TODO
 
+- [ ] Add license
 - [ ] Use Docker compose instead of shell script?;
 - [ ] Rethink the strategy that is being used to add ROS 2 packages;
 - [ ] Use base stage as default, without the need to add the --target flag when building;
