@@ -61,6 +61,9 @@ symbol = "  "
 [buf]
 symbol = " "
 
+[[battery.display]]
+threshold = 25
+
 [c]
 symbol = " "
 
