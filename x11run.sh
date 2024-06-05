@@ -8,4 +8,5 @@ docker run -it \
 	--cpus "4" \
 	--memory "2.5g" \
 	-e DISPLAY=$DISPLAY \
+	--rm \
 	ros2_docker:dev
