@@ -17,6 +17,7 @@ ENV LD_LIBRARY_PATH=/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib
 ARG USERNAME=ros
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
+ENV USER=$USERNAME
 
 # Create a non-root user
 RUN groupadd --gid $USER_GID $USERNAME \
