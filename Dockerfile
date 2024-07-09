@@ -57,6 +57,12 @@ RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pk
   && rm -rf /var/lib/apt/lists/*
 ENV DEBIAN_FRONTEND=
 
+# ROS2 utils
+RUN apt-get update \
+    && apt-get install -y \
+    ros-humble-plotjuggler-ros \
+    && rm -rf /var/lib/apt/lists/*
+
 # Entrypoint
 COPY entrypoint.sh /entrypoint.sh
 
@@ -69,6 +75,7 @@ FROM ros2_docker_base as ros2_docker_dev
 RUN apt-get update \
     && apt-get install -y \
     zsh \
+    gdb \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://starship.rs/install.sh -o /home/${USERNAME}/starship_install.sh \
