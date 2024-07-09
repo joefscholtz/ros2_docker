@@ -9,4 +9,5 @@ docker run -it \
 	--memory "2.5g" \
 	-e DISPLAY=$DISPLAY \
 	--rm \
+	--name ros2_docker \
 	ros2_docker:dev
