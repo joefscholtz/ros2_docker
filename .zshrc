@@ -23,3 +23,4 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/usr/share/gazebo-11/models
 #aliases
 alias l="ls -a"
 alias ll="ls -al"
+alias ros2topics='watch -n 0.1 ros2 topic list'
