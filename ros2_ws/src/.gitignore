@@ -4,3 +4,4 @@
 !super_ros
 !super_ros/*
 !.gitignore
+!remove_git.sh
