@@ -10,10 +10,17 @@ ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_BLOCK
 
 export FPATH="$HOME/.config/zsh/eza/completions/zsh:$FPATH"
 #starship
-eval "$(starship init zsh)"
+# Check that the function `starship_zle-keymap-select()` is defined.
+# xref: https://github.com/starship/starship/issues/3418
+type starship_zle-keymap-select >/dev/null || \
+  {
+    eval "$(starship init zsh)"
+  }
 
 #source ros
 . /opt/ros/humble/setup.zsh
+. /usr/share/gazebo/setup.sh
+. /usr/share/gazebo-11/setup.sh
 # argcomplete for ros2 & colcon
 eval "$(register-python-argcomplete3 ros2)"
 eval "$(register-python-argcomplete3 colcon)"

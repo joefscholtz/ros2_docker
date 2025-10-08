@@ -2,7 +2,6 @@
 
 SCRIPT_PATH=$(dirname "$0")
 DOCKER_USER="ros"
-
 CONTAINER_NAME="ros2_docker"
 
 temp=$(mktemp)
