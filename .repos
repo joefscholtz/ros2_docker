@@ -1,0 +1,9 @@
+repositories:
+  Livox-SDK2:
+    type: git
+    url: https://github.com/joefscholtz/Livox-SDK2.git
+    version: main
+  livox_ros_driver2:
+    type: git
+    url: https://github.com/joefscholtz/livox_ros_driver2.git
+    version: main
