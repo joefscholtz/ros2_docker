@@ -1,7 +1,0 @@
-*
-!ros2_package
-!ros2_package/*
-!super_ros
-!super_ros/*
-!.gitignore
-!remove_git.sh

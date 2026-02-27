@@ -1,12 +1,3 @@
-[submodule ".config/zsh/zsh-vi-mode"]
-	path = .config/zsh/zsh-vi-mode
-	url = https://github.com/jeffreytse/zsh-vi-mode.git
-[submodule ".config/zsh/zsh-syntax-highlighting"]
-	path = .config/zsh/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule ".config/zsh/zsh-autosuggestions"]
-	path = .config/zsh/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule ".config/zsh/eza"]
-	path = .config/zsh/eza
-	url = https://github.com/eza-community/eza.git
+[submodule "dotfiles"]
+	path = dotfiles
+	url = https://github.com/joefscholtz/dotfiles
