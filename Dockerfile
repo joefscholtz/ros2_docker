@@ -61,6 +61,9 @@ RUN apt-get update \
     && apt-get install -y \
     eza \
     just \
+    qtwayland5 \
+    libqt5waylandclient5 \
+    libqt5waylandcompositor5 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --chown=$USERNAME:$USERNAME dotfiles/.zshrc /home/${USERNAME}/.zshrc
@@ -70,12 +73,6 @@ COPY --chown=$USERNAME:$USERNAME ./entrypoint.sh /home/${USERNAME}/entrypoint.sh
 COPY --chown=$USERNAME:$USERNAME .containerenv /run/
 
 RUN chmod +x /home/${USERNAME}/entrypoint.sh
-
-RUN apt-get update && apt-get install -y \
-    qtwayland5 \
-    libqt5waylandclient5 \
-    libqt5waylandcompositor5 \
-    && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
 WORKDIR /home/$USERNAME
