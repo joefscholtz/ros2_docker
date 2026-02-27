@@ -7,11 +7,10 @@ My workflow to run ros2 applications inside Docker, including base stage to depl
 Preview of the [Docker](https://www.docker.com/) image provided by this package simulating the [Turtlebot3 waffle](https://github.com/ROBOTIS-GIT/turtlebot3) with [Gazebo](https://gazebosim.org). Inside the container, the following instructions were executed
 
 ```bash
-sudo apt install ros-humble-turtlebot3 ros-humble-turtlebot3-simulations
+sudo apt update
+sudo apt install -y ros-humble-turtlebot3 ros-humble-turtlebot3-simulations
 export TURTLEBOT3_MODEL=waffle
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/$ROS_DISTRO/share/turtlebot3_gazebo/models
-. ~/.zshrc # or .bashrc if the ros2_docker:base image is being used
-ros2 launch turtlebot3_gazebo turtlebot3_world.launch
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
 
 and this is the result:
