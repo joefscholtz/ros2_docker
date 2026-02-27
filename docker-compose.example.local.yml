@@ -1,11 +1,13 @@
 services:
-    ros2_docker_app:
+    ros2_project_app:
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.example
         image: ros2_docker:latest
-        hostname: ros2_docker
+        hostname: ros2_project
         volumes:
+            - .:/workspace:z
             - /dev:/dev
+        working_dir: /workspace
         device_cgroup_rules:
             - "c 188:* rwm" # USB serial devices /dev/ttyUSB* (major=188)

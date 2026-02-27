@@ -2,6 +2,6 @@
 
 set -e
 
-. /opt/ros/humble/setup.zsh
+. /opt/ros/jazzy/setup.zsh
 
 exec $@
