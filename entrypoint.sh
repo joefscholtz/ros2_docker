@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 set -e
 
-. /opt/ros/humble/setup.bash
-
-echo "Provided arguments: $@"
+. /opt/ros/humble/setup.zsh
 
 exec $@

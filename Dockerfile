@@ -1,4 +1,6 @@
-FROM osrf/ros:humble-desktop-full AS ros2_docker_base
+FROM osrf/ros:jazzy-desktop-full AS ros2_docker
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 #TODO: Use base as default stage
 RUN apt-get update \
@@ -8,11 +10,13 @@ RUN apt-get update \
     nano \
     htop \
     curl \
+    zsh \
+    gdb \
     python3-argcomplete \
     && rm -rf /var/lib/apt/lists/*
 
 RUN rosdep init || echo "rosdep already initialized"
-ENV LD_LIBRARY_PATH=/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib
+ENV LD_LIBRARY_PATH=/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/lib
 
 ARG USERNAME=ros
 ARG USER_UID=1000
@@ -52,43 +56,34 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null \
   && apt-get update && apt-get install -q -y --no-install-recommends \
-    ros-humble-ros-gz \
-    ros-humble-gazebo-ros \
-    ros-humble-gazebo-ros-pkgs \
+    ros-jazzy-ros-gz \
+    ros-jazzy-gazebo-ros \
+    ros-jazzy-gazebo-ros-pkgs \
   && rm -rf /var/lib/apt/lists/*
 ENV DEBIAN_FRONTEND=
 
 # ROS2 utils
 RUN apt-get update \
     && apt-get install -y \
-    ros-humble-plotjuggler-ros \
+    ros-jazzy-plotjuggler-ros \
     && rm -rf /var/lib/apt/lists/*
 
-# Entrypoint
-COPY entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
-
-CMD ["bash"]
-
-FROM ros2_docker_base as ros2_docker_dev
-
-RUN apt-get update \
-    && apt-get install -y \
-    zsh \
-    gdb \
-    && rm -rf /var/lib/apt/lists/*
-
+#Dev config
 RUN curl -sS https://starship.rs/install.sh -o /home/${USERNAME}/starship_install.sh \
     && chmod +x /home/${USERNAME}/starship_install.sh
 RUN /home/${USERNAME}/starship_install.sh -y
 
 USER ros
 
-COPY .zshrc /home/${USERNAME}/.zshrc
-COPY .config /home/${USERNAME}/.config
+COPY ./dotfiles/.zshrc /home/${USERNAME}/.zshrc
+COPY ./dotfiles/.config /home/${USERNAME}/.config
+COPY .containerenv /run/
 
 RUN sudo chown ros /home/${USERNAME}/.zshrc
 
-WORKDIR /home/${USERNAME}
+# Entrypoint
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/bin/zsh", "/entrypoint.sh"]
+
 CMD ["zsh"]

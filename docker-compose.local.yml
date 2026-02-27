@@ -1,0 +1,12 @@
+services:
+    ros2_docker_app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: ros2_docker:latest
+        volumes:
+            - .:/workspace:z
+            - /dev:/dev
+        working_dir: /workspace
+        device_cgroup_rules:
+            - "c 188:* rwm" # USB serial devices /dev/ttyUSB* (major=188)
