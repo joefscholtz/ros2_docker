@@ -23,13 +23,21 @@ ARG USER_GID=$USER_UID
 ENV USER=$USERNAME
 
 # Create a non-root user
-RUN groupadd --gid $USER_GID $USERNAME \
-  && useradd -s /bin/zsh --uid $USER_UID --gid $USER_GID -m $USERNAME \
-  && apt-get update \
-  && apt-get install -y sudo \
-  && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
-  && chmod 0440 /etc/sudoers.d/$USERNAME \
-  && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y sudo zsh && \
+    EXISTING_USER=$(getent passwd $USER_UID | cut -d: -f1) && \
+    if [ -n "$EXISTING_USER" ] && [ "$EXISTING_USER" != "$USERNAME" ]; then \
+        usermod -l $USERNAME $EXISTING_USER && \
+        groupmod -n $USERNAME $(getent group $USER_UID | cut -d: -f1) && \
+        usermod -d /home/$USERNAME -m $USERNAME; \
+    elif id -u $USERNAME >/dev/null 2>&1; then \
+        usermod -u $USER_UID -g $USER_GID $USERNAME; \
+    else \
+        groupadd --gid $USER_GID $USERNAME && \
+        useradd --uid $USER_UID --gid $USER_GID -m -s /bin/zsh $USERNAME; \
+    fi && \
+    echo "$USERNAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && \
+    chmod 0440 /etc/sudoers.d/$USERNAME && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN usermod -aG dialout ${USERNAME}
 # RUN source /opt/ros/jazzy/setup.zsh
@@ -61,6 +69,7 @@ RUN apt-get update \
     && apt-get install -y \
     eza \
     just \
+    bat \
     qtwayland5 \
     libqt5waylandclient5 \
     libqt5waylandcompositor5 \
