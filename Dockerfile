@@ -65,6 +65,8 @@ RUN curl -sS https://starship.rs/install.sh -o /home/${USERNAME}/starship_instal
     && chmod +x /home/${USERNAME}/starship_install.sh
 RUN /home/${USERNAME}/starship_install.sh -y
 
+RUN curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
 RUN apt-get update \
     && apt-get install -y \
     eza \
@@ -85,8 +87,6 @@ RUN chmod +x /home/${USERNAME}/entrypoint.sh
 
 USER $USERNAME
 WORKDIR /home/$USERNAME
-
-RUN curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
 ENTRYPOINT ["/home/ros/entrypoint.sh"]
 CMD ["zsh"]
